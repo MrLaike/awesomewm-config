@@ -1,17 +1,25 @@
------------------------------------------------------------------------------------------------------------------------
---                                                   Base setup                                                      --
------------------------------------------------------------------------------------------------------------------------
+-- If LuaRocks is installed, make sure that packages installed through it are
+-- found (e.g. lgi). If LuaRocks is not installed, do nothing.
+pcall(require, "luarocks.loader")
+-- Standard awesome library
+local gears = require("gears")
+require("awful.autofocus")
+-- Theme handling library
+local beautiful = require("beautiful")
+-- Notification library
 
--- Configuration file selection
------------------------------------------------------------------------------------------------------------------------
---local rc = "colorless.rc-colorless"
+beautiful.init(gears.filesystem.get_dir("config") .. "/themes/default/theme.lua")
 
---local rc = "color.red.rc-red"
---local rc = "color.blue.rc-blue"
---local rc = "color.orange.rc-orange"
---local rc = "color.green.rc-green"
+require('error_handler')
 
-local rc = "shade.ruby.rc-ruby"
---local rc = "shade.steel.rc-steel"
+require("scripts.set-wallpaper")
 
-require(rc)
+require("configs.hotkeys")
+require("configs.client.rules")
+require("configs.client")
+require("configs.tags")
+
+require("panel")
+require('modules.notifications')
+require('modules.lockscreen')
+

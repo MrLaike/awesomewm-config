@@ -1,19 +1,19 @@
-local awful = require('awful')
-local wibox = require('wibox')
-local gears = require('gears')
-local naughty = require('naughty')
-local dpi = require('beautiful').xresources.apply_dpi
+local awful = require("awful")
+local wibox = require("wibox")
+local gears = require("gears")
+local naughty = require("naughty")
+local dpi = require("beautiful").xresources.apply_dpi
 local watch = awful.widget.watch
-local clickable_container = require('widgets.clickable-container')
+local clickable_container = require("ui.widgets.clickable-container")
 
 local config_dir = gears.filesystem.get_configuration_dir()
-local icon_dir = config_dir .. 'widget/battery/icons/'
+local icon_dir = config_dir .. "widget/battery/icons/"
 
 local battery = function ()
   local imagebox = wibox.widget {
     nil,
     {
-      id = 'icon',
+      id = "icon",
       -- image = icon_dir
       widget = wibox.widget.imagebox
     },
@@ -22,10 +22,10 @@ local battery = function ()
   }
   
   local percent_text = wibox.widget {
-    id = 'percent_text',
-    text = '100%',
-    align = 'center',
-    valign = 'center',
+    id = "percent_text",
+    text = "100%",
+    align = "center",
+    valign = "center",
     widget = wibox.widget.textbox
   }
 
@@ -49,7 +49,7 @@ local battery = function ()
       awful.button(
         {}, 1, nil, 
         function () 
-          awful.spawn('kitty') 
+          awful.spawn("kitty")
         end
       )
     )
@@ -59,12 +59,12 @@ local battery = function ()
   -- Всплывающая подсказка
   local tooltip = awful.tooltip {
     objects = { button },
-    align = 'right',
-    text = 'Empty',
+    align = "right",
+    text = "Empty",
   }
   local get_info = function ()
     awful.spawn.easy_async_with_shell(
-      'upower -i $(upower -e | grep BAT)',
+      "upower -i $(upower -e | grep BAT)",
       function (stdout)
         tooltip:set_text(stdout:sub(1, -2))
       end
@@ -72,7 +72,7 @@ local battery = function ()
   end
 
   widget:connect_signal(
-    'mouse::enter',
+    "mouse::enter",
     function() 
       get_info()
     end
@@ -80,10 +80,10 @@ local battery = function ()
 
   local show_warning = function (percent)
     naughty.notification ({
-      -- icon = ''
-      app_name = 'System notification',
-      title = 'Battery',
-      message = 'battery ' .. percent .. '%'
+      -- icon = ""
+      app_name = "System notification",
+      title = "Battery",
+      message = "battery " .. percent .. "%"
     })
   end
 
@@ -96,13 +96,13 @@ local battery = function ()
 
 
         -- Если низкий заряд батареи то выводим предупреждение
-        if (percentage > 0 and percentage < 60) and (status == 'discharging') then
+        if (percentage > 0 and percentage < 60) and (status == "discharging") then
           show_warning(percentage)
         end
 
         widget.spacing = dpi(5)
         percent_text.visible = true
-        percent_text:set_text(percentage .. '%')
+        percent_text:set_text(percentage .. "%")
 
         --imagebox.icon:set_image()
 

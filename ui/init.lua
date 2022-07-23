@@ -1,6 +1,6 @@
 local awful = require("awful")
-local top_panel = require("panel.top")
-local right_panel = require("panel.right")
+local top_panel = require("ui.panel.main")
+local right_panel = require("ui.panel.right")
 
 awful.screen.connect_for_each_screen(function(screen)
     --local taglist = require("widgets.taglist")(screen)

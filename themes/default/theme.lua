@@ -79,9 +79,12 @@ theme.menu_submenu_icon = themes_path.."default/submenu.png"
 theme.menu_height  = dpi(15)
 theme.wibar_bg      = "#222222"
 theme.wibar_radius  = 15
-theme.wibar_height  = dpi(35)
-theme.panel_offsetx = dpi(25)
-theme.wibar_margins = dpi(8)
+theme.wibar_height  = dpi(45)
+theme.wibar_offsetx = dpi(5)
+theme.wibar_margins = dpi(5)
+
+theme.taglist_spacing = 5
+theme.taglist_bg = "#444444"
 
 
 

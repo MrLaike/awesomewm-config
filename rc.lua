@@ -14,12 +14,12 @@ require('error_handler')
 
 require("scripts.set-wallpaper")
 
-require("configs.hotkeys")
+require("configs.keys")
 require("configs.client.rules")
 require("configs.client")
 require("configs.tags")
 
-require("panel")
+require("ui")
 require('modules.notifications')
 require('modules.lockscreen')
 

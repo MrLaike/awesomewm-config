@@ -1,13 +1,13 @@
-local awful = require('awful')
-local wibox = require('wibox')
-local gears = require('gears')
-local naughty = require('naughty')
-local dpi = require('beautiful').xresources.apply_dpi
+local awful = require("awful")
+local wibox = require("wibox")
+local gears = require("gears")
+local naughty = require("naughty")
+local dpi = require("beautiful").xresources.apply_dpi
 local watch = awful.widget.watch
-local clickable_container = require('widgets.clickable-container')
+local clickable_container = require("ui.widgets.clickable-container")
 
 local config_dir = gears.filesystem.get_configuration_dir()
-local icon_dir = config_dir .. 'widget/battery/icons/'
+local icon_dir = config_dir .. "widget/battery/icons/"
 
 local update_available = false
 
@@ -15,10 +15,10 @@ local package_updater = function ()
   local widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
     {
-      id = 'icon',
+      id = "icon",
       -- image = icon_dir
       widget = wibox.widget.textbox,
-      text = 'Update not found'
+      text = "Update not found"
       --resize = true
     },
   }
@@ -37,7 +37,7 @@ local package_updater = function ()
       awful.button(
         {}, 1, nil, 
         function () 
-          awful.spawn('alacritty') 
+          awful.spawn("alacritty")
         end
       )
     )
@@ -46,41 +46,41 @@ local package_updater = function ()
   -- Всплывающая подсказка
   local tooltip = awful.tooltip {
     objects = { button },
-    align = 'right',
+    align = "right",
     margin_leftright = dpi(8),
     margin_topbottom = dpi(8),
     timer_function = function ()
       if update_available then
         return packages:gsub('\n$', '')
       else
-        return 'Updated'
+        return "Updated"
       end
     end
   }
 
   local show_warning = function (percent)
     naughty.notification ({
-      -- icon = ''
-      app_name = 'System notification',
-      title = 'Battery',
-      message = 'battery ' .. percent .. '%'
+      -- icon = ""
+      app_name = "System notification",
+      title = "Battery",
+      message = "battery " .. percent .. "%"
     })
   end
 
   watch(
-    'checkupdates',
+    "checkupdates",
     10,
     function (_, stdout)
       packages = stdout
       local text = nil
       if packages ~= nil then
         update_available = true
-        --icon_name = 'package-up'
-        text = 'Update found'
+        --icon_name = "package-up"
+        text = "Update found"
       else
         update_available = false
-        --icon_name = 'package'
-        text = 'Update not found'
+        --icon_name = "package"
+        text = "Update not found"
       end
       --widget.icon:set_image(widget_icon_dir .. icon_name .. '.svg')
       widget.icon:set_text(text)

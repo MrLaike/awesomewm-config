@@ -1,5 +1,5 @@
 local wibox = require("wibox")
-local clickable_container = require("widgets.clickable-container")
+local clickable_container = require("ui.widgets.clickable-container")
 local awful = require("awful")
 local gears = require("gears")
 panel_visible = false

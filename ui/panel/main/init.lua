@@ -10,18 +10,20 @@ local custom_shape = require("scripts.utils").custom_shape
 
 return function(screen)
 
-  local textclock             = wibox.widget.textclock()
-  local tools_panel_toggle    = require("ui.widgets.tools-panel-toggle")
-  local volume                = require("ui.widgets.volume-slider")()
-  local panel_height_half     = beautiful.wibar_height /2
-  local offsetx               = beautiful.wibar_offsetx or 0
-  local systray               = wibox.widget.systray();
-  local battery               = require("ui.widgets.battery")()
-  local package_updater       = require("ui.widgets.package-update")()
+  local textclock = wibox.widget.textclock({
+    format = "%a %b %e %l:%M %p"
+  })
+  local tools_panel_toggle = require("ui.widgets.tools-panel-toggle")
+  local volume = require("ui.widgets.volume-slider")()
+  local offsetx = beautiful.wibar_offsetx or 0
+  local layouts = require("ui.panel.main.layouts")
+  local systray = wibox.widget.systray();
+  local battery = require("ui.widgets.battery")()
+  local package_updater = require("ui.widgets.package-update")()
 
   -- Кастыль: Отступ сверху
   if(beautiful.wibar_margins) then
-    local panel     = awful.wibar {
+    awful.wibar {
       stretch = false,
       screen = screen,
       height = beautiful.wibar_margins,
@@ -29,7 +31,7 @@ return function(screen)
   end
 
   local panel = awful.wibar {
-    position    = "top",
+    position = "top",
     screen = screen,
     x = screen.geometry.x + offsetx,
     width = screen.geometry.width - dpi(16),
@@ -41,6 +43,8 @@ return function(screen)
     layout = wibox.layout.align.horizontal,
     expand = "none",
     {
+      tools_panel_toggle(),
+      textclock,
       {
         margins = 5,
         layout  = wibox.layout.margin,
@@ -70,10 +74,13 @@ return function(screen)
     {
       layout = wibox.layout.fixed.horizontal,
       spacing = dpi(5),
-      textclock,
-      tools_panel_toggle()
+      {
+        margin = 10,
+        layout = wibox.layout.margin,
+        layouts(screen)
+      },
     },
-    margins = {left = dpi(5)}
+    margins = 8,
   }
 
   return panel

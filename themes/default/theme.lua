@@ -82,6 +82,8 @@ theme.wibar_radius  = 15
 theme.wibar_height  = dpi(45)
 theme.wibar_offsetx = dpi(5)
 theme.wibar_margins = dpi(5)
+theme.wibar_icon_font_name = "MesloLGMDZ Nerd Font"
+theme.wibar_icon_font_size = "20px"
 
 theme.taglist_spacing = 5
 theme.taglist_bg = "#444444"

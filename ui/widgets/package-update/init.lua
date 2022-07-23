@@ -2,12 +2,14 @@ local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
 local naughty = require("naughty")
-local dpi = require("beautiful").xresources.apply_dpi
+local beautiful = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
 local watch = awful.widget.watch
 local clickable_container = require("ui.widgets.clickable-container")
 
 local config_dir = gears.filesystem.get_configuration_dir()
 local icon_dir = config_dir .. "widget/battery/icons/"
+local icon_font = beautiful.wibar_icon_font_name .. " " .. beautiful.wibar_icon_font_size
 
 local update_available = false
 
@@ -15,11 +17,15 @@ local package_updater = function ()
   local widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
     {
-      id = "icon",
-      -- image = icon_dir
-      widget = wibox.widget.textbox,
-      text = "Update not found"
-      --resize = true
+      {
+        id = "icon",
+        -- image = icon_dir
+        widget = wibox.widget.textbox,
+        forced_width = dpi(20),
+        font = icon_font,
+        text = "",
+      },
+      layout = wibox.layout.fixed.horizontal,
     },
   }
 
@@ -76,11 +82,12 @@ local package_updater = function ()
       if packages ~= nil then
         update_available = true
         --icon_name = "package-up"
-        text = "Update found"
+
+        _, count = stdout:gsub("\n", "\n")
+        text = "<span color='#ee3333'></span>"
       else
         update_available = false
         --icon_name = "package"
-        text = "Update not found"
       end
       --widget.icon:set_image(widget_icon_dir .. icon_name .. '.svg')
       widget.icon:set_text(text)

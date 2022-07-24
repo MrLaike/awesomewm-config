@@ -104,16 +104,13 @@ awful.keyboard.append_global_keybindings({
         awful.spawn(apps.backlight .. ' s 10%-')
     end, { description = "Уменьшить яркость", group = "fn" }),
     awful.key({ }, "XF86AudioRaiseVolume", function()
-        awful.spawn(apps.pactl.volume .. ' +10%')
-        awesome.emit_signal('widget::volume')
+        awesome.emit_signal('widget::volume.up')
     end, { description = "Увеличить громкость", group = "fn" }),
     awful.key({ }, "XF86AudioMute", function()
-        awful.spawn(apps.pactl.mute .. ' toggle')
-        awesome.emit_signal('widget::volume')
+        awesome.emit_signal('widget::volume.mute')
     end, { description = "Замутить", group = "fn" }),
     awful.key({ }, "XF86AudioLowerVolume", function()
-        awful.spawn(apps.pactl.volume .. ' -10%')
-        awesome.emit_signal('widget::volume')
+        awesome.emit_signal('widget::volume.down')
     end, { description = "Уменьшить громкость", group = "fn" }),
 })
 

@@ -1,14 +1,15 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local gears = require("gears")
-local spawn = require("awful.spawn")
 local awful = require("awful")
 local dpi = require("beautiful").xresources.apply_dpi
 local apps = require("configs.apps")
 
-local volume = function ()
+return function ()
     local trim = require('scripts.utils').trim;
     local icon_font = beautiful.wibar_icon_font_name .. " " .. beautiful.wibar_icon_font_size
+    local step = 5
+    local step_percent = tostring(step) .. "%"
     local slider = wibox.widget {
         {
             id = "icon",
@@ -29,31 +30,38 @@ local volume = function ()
     local slider_volume = slider.volume
     local slider_icon = slider.icon
 
-    local update = function ()
+    local mute_volume = function()
+        awful.spawn(apps.pactl.mute .. ' toggle')
         local get_active_sink_line = "pacmd list-sinks | awk '/index:/{i++} /* index:/{print i; exit}'"
+
         awful.spawn.easy_async_with_shell(get_active_sink_line, function(line)
             local line_number = trim(line);
             local muted = "pacmd list-sinks | awk '/^\\smuted:/{i++} i==\"" .. line_number .. "\" {print $2; exit}'"
 
             awful.spawn.easy_async_with_shell(muted, function (status)
-                if trim(status) == "yes" then
-                    slider_icon.text= "婢"
-                    slider_volume.text = ""
-                else
-                    local get_volume = "pacmd list-sinks | awk '/^\\svolume:/{i++} i==\"" .. line_number .. "\" {print $5; exit}'"
+                slider_icon.text= "婢"
+                slider_volume.text = ""
+            end)
+        end)
 
-                    awful.spawn.easy_async_with_shell(get_volume, function (output)
+        end
 
-                        slider_icon.text= "墳"
-                        slider_volume.text = output
+    local change_volume = function(value)
+        -- -10% or +10%
+        awful.spawn(apps.pactl.volume .. ' ' .. value)
+        local get_active_sink_line = "pacmd list-sinks | awk '/index:/{i++} /* index:/{print i; exit}'"
 
-                    end)
-                end
+        awful.spawn.easy_async_with_shell(get_active_sink_line, function(line)
+            local line_number = trim(line);
+            local get_volume = "pacmd list-sinks | awk '/^\\svolume:/{i++} i==\"" .. line_number .. "\" {print $5; exit}'"
+
+            awful.spawn.easy_async_with_shell(get_volume, function (value)
+                slider_icon.text= "墳"
+                slider_volume.text = value
             end)
         end)
     end
 
-    update()
 
     -- Добавляем событие на пракрутку колесика мышки(увел/умен громкость)
     slider:buttons(
@@ -63,8 +71,7 @@ local volume = function ()
                             4,
                             nil,
                             function ()
-                                awful.spawn(apps.pactl.volume .. ' +10%')
-                                update()
+                                change_volume("+" .. step_percent)
                             end
                     ),
                     awful.button(
@@ -72,24 +79,35 @@ local volume = function ()
                             5,
                             nil,
                             function ()
-                                awful.spawn(apps.pactl.volume .. ' -10%')
-                                update()
+                                change_volume("-" .. step_percent)
                             end
                     )
             )
     )
-
-
+    -- Нужет для обновление значение громкости
+    awesome.connect_signal(
+            'widget::volume.up',
+            function ()
+                change_volume("+" .. step_percent)
+            end
+    )
 
     -- Нужет для обновление значение громкости
     awesome.connect_signal(
-            'widget::volume',
+            'widget::volume.mute',
             function ()
-                update()
+                mute_volume()
+            end
+    )
+
+    -- Нужет для обновление значение громкости
+    awesome.connect_signal(
+            'widget::volume.down',
+            function ()
+                change_volume("-" .. step_percent)
             end
     )
 
     return slider
 end
 
-return volume

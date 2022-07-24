@@ -14,8 +14,13 @@ local custom_shape = function(cr, width, height, radius)
     gears.shape.rounded_rect(cr, width, height, radius)
 end
 
+local trim = function(string)
+    return string:gsub("^%s*(.-)%s*$", "%1")
+end
+
 
 return {
     in_array = in_array,
     custom_shape = custom_shape,
+    trim = trim,
 }

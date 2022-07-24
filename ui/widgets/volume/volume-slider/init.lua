@@ -38,7 +38,7 @@ local volume = function ()
     function ()
       local value = slider_volume:get_value()
 
-      awful.spawn('pactl set-sink-volume 0 ' .. value .. '%', false)
+      awful.spawn('pactl set-sink-volume @DEFAULT_SINK@ ' .. value .. '%', false)
     end
   )
 

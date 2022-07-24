@@ -1,5 +1,5 @@
 -- pactl info | grep 'Sink:' | awk '{split($0,a); print a[3];}'
-local alsa_output = '0' --'alsa_output.pci-0000_05_00.6.analog-stereo';
+local alsa_output = '@DEFAULT_SINK@' --'alsa_output.pci-0000_05_00.6.analog-stereo';
 local apps = {
     rofi_launcher   = 'rofi -show combi',
     launcher        = 'launcher',

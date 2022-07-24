@@ -14,7 +14,7 @@ return function(screen)
     format = "%a %b %e %l:%M %p"
   })
   local tools_panel_toggle = require("ui.widgets.tools-panel-toggle")
-  local volume = require("ui.widgets.volume-slider")()
+  local volume = require("ui.widgets.volume.block")()
   local offsetx = beautiful.wibar_offsetx or 0
   local layouts = require("ui.panel.main.layouts")
   local systray = wibox.widget.systray();
@@ -45,11 +45,7 @@ return function(screen)
     {
       tools_panel_toggle(),
       textclock,
-      {
-        margins = 5,
-        layout  = wibox.layout.margin,
-        volume,
-      },
+
       {
         margins = 5,
         layout  = wibox.layout.margin,
@@ -74,6 +70,11 @@ return function(screen)
     {
       layout = wibox.layout.fixed.horizontal,
       spacing = dpi(5),
+      {
+        margins = 5,
+        layout  = wibox.layout.margin,
+        volume,
+      },
       {
         margin = 10,
         layout = wibox.layout.margin,

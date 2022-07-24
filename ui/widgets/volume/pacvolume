@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Get the index of the selected sink:
+getsink() {
+
+}
+
+# Get the selected sink volume
+getvolume() {
+
+}
+
+getvolume
+

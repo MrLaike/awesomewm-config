@@ -71,7 +71,7 @@ local right_panel = function(screen)
         color = beautiful.groups_title_bg,
         widget = wibox.widget.separator
     }
-    local volume = require("ui.widgets.volume-slider")
+    local volume = require("ui.widgets.volume.volume-slider")
 
     panel : setup {
         {
@@ -97,7 +97,7 @@ local right_panel = function(screen)
                     {
                         layout = wibox.layout.fixed.vertical,
                         spacing = dpi(7),
-                        require("ui.widgets.volume-slider")(),
+                        require("ui.widgets.volume.volume-slider")(),
                         --require('widget.user-profile'),
                         --require('widget.weather'),
                         --require('widget.email'),

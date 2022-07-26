@@ -2,6 +2,8 @@ local awful = require("awful")
 local wibox = require("wibox")
 local dpi = require("beautiful.xresources").apply_dpi
 local gears = require("gears")
+local beautiful = require("beautiful")
+local in_array = require('scripts.utils').in_array
 
 local double_click_event_handler = function(double_click_event)
     if double_click_timer then
@@ -118,7 +120,35 @@ local horizontal_bar = function(c, position, bg, size, hide)
     end
 end
 
-return {
-    vertical_bar = vertical_bar,
-    horizontal_bar = horizontal_bar
-}
+client.connect_signal("request::titlebars", function(c)
+    local client_with_hide_titlebar = {
+        'URxvt',
+        'UXterm',
+        'TelegramDesktop',
+        'obsidian'
+    }
+    local bg = beautiful.bg_titlebar or "#00000088"
+    if c.type == 'normal' then
+        if in_array(c.class, client_with_hide_titlebar) then
+            vertical_bar(c, "left", bg, 30, true)
+        else
+            vertical_bar(c, "left", bg, 30, false)
+        end
+    elseif c.type == 'dialog' then
+        horizontal_bar(c, "top", bg, 30, false)
+    end
+end)
+
+client.connect_signal("request::default_keybindings", function()
+    awful.key({ "Mod4", "Shift" }, "c", function(c)
+        local bg = beautiful.bg_titlebar or "#00000088"
+        if beautiful.titlebar_hidden == true then
+            vertical_bar(c, "left", bg, 40, false)
+            beautiful.titlebar_hidden = false
+        else
+            vertical_bar(c, "left", bg, 40, true)
+            beautiful.titlebar_hidden = true
+        end
+    end, { description = "(un)maximize horizontally", group = "client" })
+end)
+

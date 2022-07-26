@@ -5,6 +5,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local taglist = require("ui.widgets.taglist")
+local tasklist = require("ui.widgets.tasklist")
 local custom_shape = require("scripts.utils").custom_shape
 
 return function(screen)
@@ -76,6 +77,7 @@ return function(screen)
             right = dpi(15),
             {
                 layout = wibox.layout.fixed.horizontal,
+                tasklist(screen),
                 system_tray(),
                 battery,
                 package_updater,

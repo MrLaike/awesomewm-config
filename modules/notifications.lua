@@ -42,8 +42,10 @@ ruled.notification.connect_signal(
                 properties = {
                     widget_template = {
                         {
-                            naughty.widget.icon,
-                            forced_height = dpi(100),
+                            {
+                                naughty.widget.icon,
+                                forced_width = dpi(100),
+                            },
                             halign = "center",
                             valign = "center",
                             widget = wibox.container.place
@@ -53,8 +55,8 @@ ruled.notification.connect_signal(
                     },
                     bg = '#333333',
                     fg = '#ffffff',
-                    margin = dpi(8),
-                    minimum_width = dpi(200),
+                    margin = dpi(20),
+                    forced_width = dpi(200),
                     position = 'top_right',
                     implicit_timeout = 5
                 }

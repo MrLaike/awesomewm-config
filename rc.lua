@@ -16,8 +16,9 @@ require("scripts.set-wallpaper")
 
 require("configs.keys")
 require("configs.client.rules")
-require("configs.client")
+require("ui.client")
 require("configs.tags")
+require("configs.layouts")
 
 require("ui")
 require('modules.notifications')

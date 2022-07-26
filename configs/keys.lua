@@ -3,8 +3,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local apps = require("configs.apps")
 local bling = require('modules.bling')
 local layout_machi = require('modules.layout-machi')
-local beautiful = require("beautiful")
-local vertical_bar = require("modules.titlebar").vertical_bar
 local dpi = require("beautiful.xresources").apply_dpi
 
 require("modules.lockscreen").init()
@@ -276,17 +274,6 @@ client.connect_signal("request::default_keybindings", function()
                 c:emit_signal("request::activate", "key.unminimize", { raise = true })
             end
         end, { description = "Развернуть окно", group = "client" }),
-
-        awful.key({ modkey, shiftkey }, "c", function(c)
-            local bg = beautiful.bg_titlebar or "#00000088"
-            if beautiful.titlebar_hidden == true then
-                vertical_bar(c, "left", bg, 40, false)
-                beautiful.titlebar_hidden = false
-            else
-                vertical_bar(c, "left", bg, 40, true)
-                beautiful.titlebar_hidden = true
-            end
-        end, { description = "(un)maximize horizontally", group = "client" })
 
     })
 

@@ -65,47 +65,47 @@ return function()
 
     -- Добавляем событие на пракрутку колесика мышки(увел/умен громкость)
     slider:buttons(
-            gears.table.join(
-                    awful.button(
-                            {},
-                            4,
-                            nil,
-                            function()
-                                change_volume("+" .. step_percent)
-                            end
-                    ),
-                    awful.button(
-                            {},
-                            5,
-                            nil,
-                            function()
-                                change_volume("-" .. step_percent)
-                            end
-                    )
+        gears.table.join(
+            awful.button(
+                {},
+                4,
+                nil,
+                function()
+                    change_volume("+" .. step_percent)
+                end
+            ),
+            awful.button(
+                {},
+                5,
+                nil,
+                function()
+                    change_volume("-" .. step_percent)
+                end
             )
+        )
     )
     -- Нужет для обновление значение громкости
     awesome.connect_signal(
-            'widget::volume.up',
-            function()
-                change_volume("+" .. step_percent)
-            end
-    )
-
-    -- Нужет для обновление значение громкости
-    awesome.connect_signal(
-            'widget::volume.mute',
-            function()
-                mute_volume()
-            end
+        'widget::volume.up',
+        function()
+            change_volume("+" .. step_percent)
+        end
     )
 
     -- Нужет для обновление значение громкости
     awesome.connect_signal(
-            'widget::volume.down',
-            function()
-                change_volume("-" .. step_percent)
-            end
+        'widget::volume.mute',
+        function()
+            mute_volume()
+        end
+    )
+
+    -- Нужет для обновление значение громкости
+    awesome.connect_signal(
+        'widget::volume.down',
+        function()
+            change_volume("-" .. step_percent)
+        end
     )
 
     return slider

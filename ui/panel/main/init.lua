@@ -12,11 +12,12 @@ return function(screen)
 
     local textclock = wibox.widget.textclock("%a %b %e %l:%M %p")
     local tools_panel_toggle = require("ui.widgets.tools-panel-toggle")
-    local volume = require("ui.widgets.volume.block")()
+    local volume = require("ui.widgets.volume.block")
     local offsetx = beautiful.wibar_offsetx or 0
     local layouts = require("ui.panel.main.layouts")
-    local battery = require("ui.widgets.battery")()
-    local package_updater = require("ui.widgets.package-update")()
+    local battery = require("ui.widgets.battery")
+    local package_updater = require("ui.widgets.package-update")
+    local notify = require('ui.widgets.notification.panel-widget')
 
     --- Systray
     --- ~~~~~~~
@@ -79,9 +80,10 @@ return function(screen)
                 layout = wibox.layout.fixed.horizontal,
                 tasklist(screen),
                 system_tray(),
-                battery,
-                package_updater,
-                volume,
+                notify(),
+                battery(),
+                package_updater(),
+                volume(),
                 layouts(screen),
             }
         },

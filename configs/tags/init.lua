@@ -116,8 +116,8 @@ local names = { "一", "二", "三", "四", "五", "六", "七", "八", "九", }
 
 tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
-        layout_machi.layout.create{ new_placement_cb = layout_machi.layout.placement.empty },
         equal,
+        layout_machi.layout.create{ new_placement_cb = layout_machi.layout.placement.empty },
         layout_suit.floating,
         mstab,
         layout_suit.tile,

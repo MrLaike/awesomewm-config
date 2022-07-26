@@ -23,9 +23,11 @@ return function()
     }
 
     widget_button:buttons(
-        gears.table.join(
-            awful.button({}, 1, nil, function() awful.screen.focused().right_panel:toggle() end)
-        )
+            gears.table.join(
+                    awful.button({}, 1, nil, function()
+                        awful.screen.focused().right_panel:toggle()
+                    end)
+            )
     )
 
     return widget_button

@@ -5,7 +5,7 @@ local vertical_bar = require("modules.titlebar").vertical_bar
 local horizontal_bar = require("modules.titlebar").horizontal_bar
 local in_array = require('scripts.utils').in_array
 
-client.connect_signal("manage", function (c)
+client.connect_signal("manage", function(c)
     if awesome.startup
             and not c.size_hints.user_position
             and not c.size_hints.program_position then
@@ -13,7 +13,6 @@ client.connect_signal("manage", function (c)
         awful.placement.no_offscreen(c)
     end
 end)
-
 
 client.connect_signal("request::titlebars", function(c)
     local client_with_hide_titlebar = {
@@ -35,14 +34,18 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
+    c:emit_signal("request::activate", "mouse_enter", { raise = false })
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c)
+    c.border_color = beautiful.border_focus
+end)
+client.connect_signal("unfocus", function(c)
+    c.border_color = beautiful.border_normal
+end)
 
 if beautiful.rounded_corners then
-    client.connect_signal("property::geometry", function (c)
+    client.connect_signal("property::geometry", function(c)
         if not c.fullscreen then
             gears.timer.delayed_call(function()
                 gears.surface.apply_shape_bounding(c, gears.shape.rounded_rect, 10)

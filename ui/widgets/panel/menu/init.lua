@@ -11,11 +11,15 @@ require("awful.hotkeys_popup.keys")
 local menu = {}
 
 menu['awesomemenu'] = {
-    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+    { "hotkeys", function()
+        hotkeys_popup.show_help(nil, awful.screen.focused())
+    end },
     { "manual", apps.terminal .. " -e man awesome" },
     { "edit config", apps.editor_cmd .. " " .. awesome.conffile },
     { "restart", awesome.restart },
-    { "quit", function() awesome.quit() end },
+    { "quit", function()
+        awesome.quit()
+    end },
 }
 
 menu['mainmenu'] = awful.menu({

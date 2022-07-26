@@ -1,4 +1,4 @@
-local in_array = function (key, array)
+local in_array = function(key, array)
     for index, value in ipairs(array) do
         if key == value then
             return true
@@ -17,7 +17,6 @@ end
 local trim = function(string)
     return string:gsub("^%s*(.-)%s*$", "%1")
 end
-
 
 return {
     in_array = in_array,

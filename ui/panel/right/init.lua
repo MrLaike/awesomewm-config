@@ -1,6 +1,6 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local gears     = require("gears")
+local gears = require("gears")
 local awful = require("awful")
 local dpi = beautiful.xresources.apply_dpi
 
@@ -73,7 +73,7 @@ local right_panel = function(screen)
     }
     local volume = require("ui.widgets.volume.volume-slider")
 
-    panel : setup {
+    panel:setup {
         {
             expand = 'none',
             layout = wibox.layout.fixed.vertical,

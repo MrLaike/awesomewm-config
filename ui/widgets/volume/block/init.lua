@@ -2,10 +2,10 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local gears = require("gears")
 local awful = require("awful")
-local dpi = require("beautiful").xresources.apply_dpi
+local dpi = beautiful.xresources.apply_dpi
 local apps = require("configs.apps")
 
-return function ()
+return function()
     local trim = require('scripts.utils').trim;
     local icon_font = beautiful.wibar_icon_font_name .. " " .. beautiful.wibar_icon_font_size
     local step = 5
@@ -38,13 +38,13 @@ return function ()
             local line_number = trim(line);
             local muted = "pacmd list-sinks | awk '/^\\smuted:/{i++} i==\"" .. line_number .. "\" {print $2; exit}'"
 
-            awful.spawn.easy_async_with_shell(muted, function (status)
-                slider_icon.text= "婢"
+            awful.spawn.easy_async_with_shell(muted, function(status)
+                slider_icon.text = "婢"
                 slider_volume.text = ""
             end)
         end)
 
-        end
+    end
 
     local change_volume = function(value)
         -- -10% or +10%
@@ -55,8 +55,8 @@ return function ()
             local line_number = trim(line);
             local get_volume = "pacmd list-sinks | awk '/^\\svolume:/{i++} i==\"" .. line_number .. "\" {print $5; exit}'"
 
-            awful.spawn.easy_async_with_shell(get_volume, function (value)
-                slider_icon.text= "墳"
+            awful.spawn.easy_async_with_shell(get_volume, function(value)
+                slider_icon.text = "墳"
                 slider_volume.text = value
             end)
         end)
@@ -70,7 +70,7 @@ return function ()
                             {},
                             4,
                             nil,
-                            function ()
+                            function()
                                 change_volume("+" .. step_percent)
                             end
                     ),
@@ -78,7 +78,7 @@ return function ()
                             {},
                             5,
                             nil,
-                            function ()
+                            function()
                                 change_volume("-" .. step_percent)
                             end
                     )
@@ -87,7 +87,7 @@ return function ()
     -- Нужет для обновление значение громкости
     awesome.connect_signal(
             'widget::volume.up',
-            function ()
+            function()
                 change_volume("+" .. step_percent)
             end
     )
@@ -95,7 +95,7 @@ return function ()
     -- Нужет для обновление значение громкости
     awesome.connect_signal(
             'widget::volume.mute',
-            function ()
+            function()
                 mute_volume()
             end
     )
@@ -103,7 +103,7 @@ return function ()
     -- Нужет для обновление значение громкости
     awesome.connect_signal(
             'widget::volume.down',
-            function ()
+            function()
                 change_volume("-" .. step_percent)
             end
     )

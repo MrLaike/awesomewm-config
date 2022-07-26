@@ -10,9 +10,7 @@ local custom_shape = require("scripts.utils").custom_shape
 
 return function(screen)
 
-  local textclock = wibox.widget.textclock({
-    format = "%a %b %e %l:%M %p"
-  })
+  local textclock = wibox.widget.textclock("%a %b %e %l:%M %p")
   local tools_panel_toggle = require("ui.widgets.tools-panel-toggle")
   local volume = require("ui.widgets.volume.block")()
   local offsetx = beautiful.wibar_offsetx or 0
@@ -45,13 +43,6 @@ return function(screen)
     {
       tools_panel_toggle(),
       textclock,
-
-      {
-        margins = 5,
-        layout  = wibox.layout.margin,
-        battery,
-      },
-      package_updater,
       layout = wibox.layout.fixed.horizontal,
             --bg = beautiful.bg_systray,
     },
@@ -70,6 +61,12 @@ return function(screen)
     {
       layout = wibox.layout.fixed.horizontal,
       spacing = dpi(5),
+      {
+        margins = 5,
+        layout  = wibox.layout.margin,
+        battery,
+      },
+      package_updater,
       {
         margins = 5,
         layout  = wibox.layout.margin,
